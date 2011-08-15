@@ -6,27 +6,27 @@
 *
 * As was proposed in the exercise 3 of the previous lesson,
 * we could implement a *translator* from the concrete syntax,
-* into the abstract syntax (which already is understandable for
+* into the abstract syntax (which is already understandable by
 * our interpreter). This translator is called a "parser".
 *
-* We chose here to translate concrete syntax of the
-* math infix notation into our AST format:
+* Here we choose to translate the concrete syntax of the
+* math infix notation into our AST (Abstract Syntax Tree) format:
 *
 * Example: "1 + 2" -> ["+", "1", "2"]
 *
 * The parsing process is separated in two stages: scanning and parsing.
 *
-* The first part of the the process (scanning) isn't related with
-* the semantics of our program and even doesn't touch
-* the exact grammar. All it does is just separates logical
-* syntactic *primitives* from which our grammar consists of.
+* The first part of the the process (scanning) isn't concerned with
+* the semantics of our program and doesn't even touch
+* the exact grammar. It only separates the logical
+* syntactic *primitives* that our grammar consists of.
 * These primitive parts are called "tokens".
 *
-* Tokens are sequences of chars (or a single char). For example, we have
-* digit token "115" which consists of three chars "1", "1" and "5".
+* Tokens are sequences of one or more characters. For example, we can have
+* the digit token "115" which consists of three chars "1", "1" and "5".
 *
 * So our task in this lesson is to separate tokens from the input stream.
-* For this we need an object which is called "tokenizer". Another names of
+* For this we need an object which is called a "tokenizer". Another names for
 * it are "lexer" or "scanner" (all three are synonyms). So let's implement
 * it for our AE grammar.
 *
@@ -36,7 +36,7 @@
  * @class Lexer
  * @param {String} source
  *
- * Lexer tokenizes the input stream and separate
+ * Lexer tokenizes the input stream and separates
  * from it concrete tokens of our grammar.
  */
 function Lexer(source) {
@@ -60,7 +60,7 @@ function Lexer(source) {
    */
   this.currentChar = "";
 
-  // init current char to first one
+  // initializes currentChar to the first one
   this.readNextChar();
 
 }
@@ -84,9 +84,9 @@ Lexer.prototype = {
    * readNextToken
    * Reading the next token is quite simple
    * in this interpreter: we have only "digits"
-   * and "symbols" -- (, ), + and -.
-   * We analyze the current char and decide on
-   * it which reading procedure to execute.
+   * and "symbols", namely (, ), + and -.
+   * We analyze the current char and based on it
+   * decide which reading procedure to execute.
    */
   readNextToken: function () {
 
@@ -99,8 +99,8 @@ Lexer.prototype = {
     // symbols: parens, + or -
     return this.readSymbol();
 
-    // etc. if we would have more complex grammar;
-    // that is reading next tokens is the
+    // etc. if we would have more complex grammar.
+    // Reading next tokens is the
     // simplest case analysis procedure
 
   },
@@ -159,9 +159,9 @@ Lexer.tokenize = function (source) {
   return tokens;
 };
 
-// That's it. We *tokenized* our source code into parts (tokens) which
-// understandable for the following part of our parsing process -- the "parser",
-// which already will work with these tokens.
+// That's it. We've *tokenized* our source code into parts (tokens) which are
+// understandable for the next part of our parsing process -- the "parser",
+// which will work with these tokens.
 
 // Let's test our tokenizer
 
@@ -176,7 +176,7 @@ console.log(Lexer.tokenize("(10 + 5) - (1 - 4)"));
 
 // Exercises:
 //
-// 1. Encapsulate the text reader into the separate class, abstracting
+// 1. Encapsulate the text reader into a separate class, abstracting
 //    the reading process of the next char. The cursor's position
 //    should be handled by this class and should be removed from the Lexer.
 //    This abstraction gives us the ability to read the next char from
@@ -187,11 +187,11 @@ console.log(Lexer.tokenize("(10 + 5) - (1 - 4)"));
 //    this.source = new Reader(source);
 //    this.currentChar = this.source.read();
 //
-// 2. Could we handle this exact lexer is easier manner, e.g. using RegExps?
+// 2. Could we handle this exact lexer in an easier manner, e.g. using RegExps?
 //    Experiment and provide different implementation of the Lexer
 //    with the same end result.
 //
-// 3. For more less complex grammars with many tokens, it is good
+// 3. For more complex grammars with many types of tokens, it is good
 //    to keep track of token types and also represent a token
 //    not as simply a value, but as e.g. a pair of a type and a value --
 //    it will make handling of tokens easier in the parser.
@@ -200,7 +200,7 @@ console.log(Lexer.tokenize("(10 + 5) - (1 - 4)"));
 //
 //    Example:
 //
-//    var TokenTypes = {digit: 0, simbol: 1};
+//    var TokenTypes = {digit: 0, symbol: 1};
 //    function Token(type, value) {...}
 //    return new Token(TokenTypes.digit, tokenValue);
 //
