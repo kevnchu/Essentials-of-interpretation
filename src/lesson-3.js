@@ -4,25 +4,26 @@
  *
  * Lesson 3. Parsing. Parser of AE in math infix notation.
  *
- * In this lesson we continue implementation of our parser
- * started in lesson 2 where we've written the first part
- * of the parsing process -- the lexer (or scanner, tokenizer).
+ * In this lesson we continue the implementation of our parser
+ * started in lesson 2 where we wrote the first part of the parsing 
+ * process -- the lexer (or scanner, tokenizer).
  *
- * The work of the parser is similar to work of the lexer. The
- * difference is that parser already works with higher abstractions
- * known as "tokens" (which are provided by the lexer). That is,
- * lexer built tokens from chars, and parser build semantic nodes
- * from tokens. On the return from parser we already should get
- * the complete AST in the format which is understandable for
+ * The work of the parser is similar to that of the lexer. The
+ * difference is that the parser works with higher abstractions
+ * known as "tokens" (which are already provided by the lexer). That is,
+ * the lexer builds tokens from chars, and the parser builds semantic nodes
+ * from tokens. On the return from the parser we should already get
+ * the complete AST in a format that is understandable for
  * our interpreter.
  *
  * Source -> Lexer -> Parser -> Interpreter, e.g.:
  *
  * "1 + 2" -> ["1", "+", "2"] -> ["+", "1", "2"] -> 3
  *
- * We assume here the interpreter with supporting multiplication
- * and division (exercise 1 from lesson 1) -- to work with the
- * precedence: 2 + 2 * 2 should be 6 (by the school math ;)), not 8,
+ * We assume here an interpreter supporting multiplication
+ * and division (exercise 1 from lesson 1) to take
+ * precedence into account.
+ * For example 2 + 2 * 2 should be 6 (by the school math ;)), not 8,
  * if we hadn't consider the precedence. On the other hand,
  * (2 + 2) * 2 should be 8, since grouping operator has the highest priority.
  *
@@ -36,11 +37,11 @@
 
 /**
  * @class Parser
- * @param source
+ * @param {String} source
  *
  * The parser works in coordination with the lexer asking the
- * later next and next token. Analyzing tokens parser descides
- * which procedure of forming an AST node to execute.
+ * later next and next token. Analyzing tokens the parser decides
+ * which procedure for forming an AST node to execute.
  */
 function Parser(source) {
 
@@ -70,7 +71,7 @@ Parser.prototype = {
   /**
    * readNextToken
    * This one is just a wrapper over the lexer's
-   * the same method. This method reads the next
+   * method with the same name. This method reads the next
    * token from lexer and saves it into the
    * "currentToken" property.
    */
@@ -90,13 +91,15 @@ Parser.prototype = {
      *
      * As was mentioned, multiplication and division have higher
      * priority than addition and subtraction: 2 + 2 * 2 == 6.
-     * It means, that the first action in our expressions parsing
+     * It means that the first action in our expression parsing
      * should be exactly parsing of the multiplication and only after
-     * that -- applying the result to addition. In respect of
-     * procedures execution order it means, we first should
+     * that -- applying the result to addition. With respect to
+     * procedure execution order it means the we should first
      * start parsing the addition (let's call it additiveExpression),
      * and then, already inside it, to parse its LHS and RHS operands as
      * multiplicativeExpression.
+     *
+     * LHS and RHS refer to Left/Right Hand Side
      *
      * Example:
      *
@@ -104,16 +107,16 @@ Parser.prototype = {
      * LHS - "2", RHS - "2 * 2". So, we parse both RHS and LHS of the
      * additiveExpression as multiplicativeExpression.
      *
-     * Besides. The additiveExpression can contain only RHS (assuming LHS)
-     * as 0. For example: 2 * 2 is 2 * 2 + 0.
+     * Besides the additiveExpression can contain only RHS assuming LHS
+     * is 0. For example: 2 * 2 is 2 * 2 + 0.
      */
 
     // So the parseExpressionsRecursively is just a wrapper
     // for parseAdditiveExpression since it's the main
     // part, i.e. *the lowest* precedence.
     //
-    // Grouping operator as we'll see has the *highest* priority:
-    // (2 + 2) * 2 is 8. That's why grouping operators is parsed at the end.
+    // As we'll see the grouping operator has the *highest* priority:
+    // (2 + 2) * 2 is 8. That's why grouping operators are parsed at the end.
     // I.e. the rule is: the lowest precedence nodes are parsed first,
     // and the highest precedence nodes -- last.
 
@@ -140,7 +143,7 @@ Parser.prototype = {
     // If we have RHS, let's parse it and adjust astNode.
     // If there's nothing on the right, it means we are at the end
     // of the source and should exit. So we try to parse in
-    // a loop "while not end of sourse" all RHSs
+    // a loop "while not end of source" all RHSs
 
     while (this.currentToken) {
 
@@ -167,7 +170,7 @@ Parser.prototype = {
 
     }
 
-    // finaly we return the parsed node
+    // finally we return the parsed node
     return leftNode;
 
   },
@@ -184,13 +187,13 @@ Parser.prototype = {
   parseMultiplicativeExpression: function () {
 
     // the code is very similar to parsing
-    // additiveExpression: the same we get first LHS
-    // and after that analyzise in a loop all RHSs
+    // additiveExpression: the same way get LHS first
+    // and then analyze all RHSs in a loop
 
     var leftNode = this.parseBaseExpression();
 
-    // and analyze the look until we have tokens
-    // and the next token is operator
+    // and analyze until we run out of tokens
+    // or the next token is operator
 
     while (this.currentToken) {
 
@@ -215,7 +218,7 @@ Parser.prototype = {
 
     }
 
-    // finaly we return the parsed node
+    // finally we return the parsed node
     return leftNode;
 
   },
@@ -249,8 +252,8 @@ Parser.prototype = {
       // we skip the open parenthesis "("
       this.readNextToken();
 
-      // inside the grouping operator can be (and should be)
-      // only some other expression, so let's recursively parse it;
+      // inside the grouping operator there can be (and should be)
+      // only another expression, so let's recursively parse it;
       // it is the result of the AST node
       astNode = this.parseExpressionsRecursively();
 
@@ -294,8 +297,8 @@ console.log(evaluate(Parser.parse("(10 - 6) / (0 + 1 * 2)"))); // 2
 // a small language e.g. in this article (we used a similar format):
 // http://blog.tcx.be/2007/05/writing-parser-overview.html
 //
-// That's said, the process of the interpretation isn't directly
-// related with the process of parsing. In the next lessons we'll
+// That said, the process of the interpretation isn't directly
+// related to the process of parsing. In the next lessons we'll
 // continue to work with ASTs only as our programs, though you may
 // write your own parsers from *any* concrete syntax to our AST format.
 //
@@ -309,7 +312,7 @@ console.log(evaluate(Parser.parse("(10 - 6) / (0 + 1 * 2)"))); // 2
 // hand-written parsers usually give us the ability to control the source
 // more effectively and in more human view, showing sensible parse errors.
 //
-// In fact, we could directly interpret the results when was parsing
+// In fact, we could directly interpret the results when parsing
 // the nodes. However, we underline here, that the parsing process is the
 // *intermediate* stage -- before the AST format, and exactly the
 // parser allows us to have *different concrete syntaxes* for the *same semantics*.
@@ -325,6 +328,6 @@ console.log(evaluate(Parser.parse("(10 - 6) / (0 + 1 * 2)"))); // 2
 //    Example: evaluate("-2 + 3") -> 1
 //
 // 3. Experiment with other concrete syntaxes which will compile
-//    to the same AST format which we use in the "evalute" function.
+//    to the same AST format which we use in the "evaluate" function.
 //    Both Lexer and Parser should be corrected in this case.
 //
