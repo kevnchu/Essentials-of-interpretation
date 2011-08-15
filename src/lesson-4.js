@@ -37,11 +37,11 @@
 function evaluate(expression, environment) {
 
   // default environment is the global environment,
-  // "TheGlobalEnvironment" object defined and descibed below
+  // "TheGlobalEnvironment" object is defined and described below
   environment || (environment = TheGlobalEnvironment);
 
   // we consider the simplest expressions such as
-  // numbers and strings as "self-evaluting", that is
+  // numbers and strings as "self-evaluating", that is
   // the expressions which directly returns their
   // values without additional evaluation
   if (isSelfEvaluating(expression))
