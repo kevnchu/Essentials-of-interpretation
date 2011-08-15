@@ -42,7 +42,12 @@ function evaluate(exp) {
 
     // if it's an operand, then push it onto the stack
     if (/\d/.test(current)) {
-      stack.push(current);
+      var number = current;
+      // in case if a number has more than one digit, i.e. >= 10
+      while ((current = exp[--cursor]) && /\d/.test(current)) {
+        number = current + number;
+      }
+      stack.push(number);
     }
 
     // else if it's an operator, then calculate the result
@@ -80,7 +85,7 @@ var operators = {
 
 // tests
 
-console.log("+ 1 2:", evaluate("+ 1 2")); // 3
+console.log("+ 15 2:", evaluate("+ 15 2")); // 17
 
 console.log("(+ 3 (* 1 2)):", evaluate("(+ 3 (* 3 2))")); // 9
 
