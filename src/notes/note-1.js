@@ -50,8 +50,8 @@ function evaluate(exp) {
 
       // we pop (previously pushed) operands from
       // the stack and apply the operator to them
-      var rightOperand = +stack.pop();
       var leftOperand  = +stack.pop();
+      var rightOperand = +stack.pop();
 
       // we compute the result and push it onto the stack
       var result = operators[current](leftOperand, rightOperand);
