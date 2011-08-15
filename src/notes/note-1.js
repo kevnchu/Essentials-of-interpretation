@@ -3,7 +3,7 @@
  * by Dmitry A. Soshnikov <dmitry.soshnikov@gmail.com>
  *
  * Note 1. Stack-based evaluation of the simplest
-   arithmetic expression (AE) written in the prefix notation.
+ * arithmetic expression (AE) written in the prefix notation.
  *
  * See: http://en.wikipedia.org/wiki/Polish_notation
  *
@@ -45,7 +45,7 @@ function evaluate(exp) {
       stack.push(current);
     }
 
-    // if it's and operand, then calculate the result
+    // else if it's an operator, then calculate the result
     else if (current in operators) {
 
       // we pop (previously pushed) operands from
@@ -70,7 +70,7 @@ function evaluate(exp) {
 
 }
 
-// operands table
+// operators table
 var operators = {
   "+": function (a, b) { return a + b },
   "-": function (a, b) { return a - b },
