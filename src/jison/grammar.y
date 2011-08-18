@@ -13,7 +13,7 @@ Expressions
 
 Expression
     : LSB Operator COMMA Expression COMMA Expression RSB
-        { $$ = eval("Number(" + $4 + ") " + $2 + " Number(" + $6 + ")"); }
+        { $$ = eval("Number(" + $Expression1 + ") " + $Operator + " Number(" + $Expression2 + ")"); }
     | Literal
     ;
 
