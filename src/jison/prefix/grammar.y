@@ -4,12 +4,12 @@
 
 Program
     : Expression
-        { console.log($1); }
+        { console.log($1, '=', eval($1)); }
     ;
 
 Expression
     : LSB OPERATOR COMMA Arguments RSB
-        { $Arguments.unshift($OPERATOR); $$ = $Arguments; }
+        { $$ = $Arguments.join($OPERATOR); }
     ;
 
 Arguments

@@ -10,9 +10,9 @@ performAction: function anonymous(yytext,yyleng,yylineno,yy,yystate,$$,_$) {
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: console.log($$[$0]); 
+case 1: console.log($$[$0], '=', eval($$[$0])); 
 break;
-case 2: $$[$0-1].unshift($$[$0-3]); this.$ = $$[$0-1]; 
+case 2: this.$ = $$[$0-1].join($$[$0-3]); 
 break;
 case 3: $$[$0-2].push($$[$0]); this.$ = $$[$0-2]; 
 break;
