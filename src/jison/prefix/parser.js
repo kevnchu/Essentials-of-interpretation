@@ -3,23 +3,27 @@ var parser = (function(){
 
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"Program":3,"Expressions":4,"Expression":5,"LSB":6,"Operator":7,"COMMA":8,"RSB":9,"Literal":10,"+":11,"-":12,"*":13,"/":14,"Number":15,"INT":16,"$accept":0,"$end":1},
-terminals_: {2:"error",6:"LSB",8:"COMMA",9:"RSB",11:"+",12:"-",13:"*",14:"/",16:"INT"},
-productions_: [0,[3,1],[4,1],[5,7],[5,1],[7,1],[7,1],[7,1],[7,1],[10,1],[15,1]],
+symbols_: {"error":2,"Program":3,"Expression":4,"LSB":5,"OPERATOR":6,"COMMA":7,"Arguments":8,"RSB":9,"Argument":10,"Literal":11,"Number":12,"INT":13,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"LSB",6:"OPERATOR",7:"COMMA",9:"RSB",13:"INT"},
+productions_: [0,[3,1],[4,5],[8,3],[8,1],[10,1],[10,1],[11,1],[12,1]],
 performAction: function anonymous(yytext,yyleng,yylineno,yy,yystate,$$,_$) {
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: console.log($$[$0]) 
+case 1: console.log($$[$0]); 
 break;
-case 3: this.$ = eval("Number(" + $$[$0-3] + ") " + $$[$0-5] + " Number(" + $$[$0-1] + ")"); 
+case 2: $$[$0-1].unshift($$[$0-3]); this.$ = $$[$0-1]; 
 break;
-case 10: this.$ = Number($$[$0]) 
+case 3: $$[$0-2].push($$[$0]); this.$ = $$[$0-2]; 
+break;
+case 4: this.$ = [$$[$0]] 
+break;
+case 8: this.$ = Number($$[$0]) 
 break;
 }
 },
-table: [{3:1,4:2,5:3,6:[1,4],10:5,15:6,16:[1,7]},{1:[3]},{1:[2,1]},{1:[2,2]},{7:8,11:[1,9],12:[1,10],13:[1,11],14:[1,12]},{1:[2,4],8:[2,4],9:[2,4]},{1:[2,9],8:[2,9],9:[2,9]},{1:[2,10],8:[2,10],9:[2,10]},{8:[1,13]},{8:[2,5]},{8:[2,6]},{8:[2,7]},{8:[2,8]},{5:14,6:[1,4],10:5,15:6,16:[1,7]},{8:[1,15]},{5:16,6:[1,4],10:5,15:6,16:[1,7]},{9:[1,17]},{1:[2,3],8:[2,3],9:[2,3]}],
-defaultActions: {2:[2,1],3:[2,2],9:[2,5],10:[2,6],11:[2,7],12:[2,8]},
+table: [{3:1,4:2,5:[1,3]},{1:[3]},{1:[2,1]},{6:[1,4]},{7:[1,5]},{4:9,5:[1,3],8:6,10:7,11:8,12:10,13:[1,11]},{7:[1,13],9:[1,12]},{7:[2,4],9:[2,4]},{7:[2,5],9:[2,5]},{7:[2,6],9:[2,6]},{7:[2,7],9:[2,7]},{7:[2,8],9:[2,8]},{1:[2,2],7:[2,2],9:[2,2]},{4:9,5:[1,3],10:14,11:8,12:10,13:[1,11]},{7:[2,3],9:[2,3]}],
+defaultActions: {2:[2,1]},
 parseError: function parseError(str, hash) {
     throw new Error(str);
 },
@@ -326,26 +330,20 @@ var YYSTATE=YY_START
 switch($avoiding_name_collisions) {
 case 0:/* skip whitespace */
 break;
-case 1:return 16;
+case 1:return 13;
 break;
-case 2:return 8;
+case 2:return 7;
 break;
-case 3:return 6;
+case 3:return 5;
 break;
 case 4:return 9;
 break;
-case 5:return 11;
-break;
-case 6:return 12;
-break;
-case 7:return 13;
-break;
-case 8:return "/";
+case 5:return 6;
 break;
 }
 };
-lexer.rules = [/^\s+/,/^[0-9]+/,/^,/,/^\[/,/^\]/,/^\+/,/^-/,/^\*/,/^\//];
-lexer.conditions = {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8],"inclusive":true}};return lexer;})()
+lexer.rules = [/^\s+/,/^[0-9]+/,/^,/,/^\[/,/^\]/,/^[\+,\-,\\,\*]/];
+lexer.conditions = {"INITIAL":{"rules":[0,1,2,3,4,5],"inclusive":true}};return lexer;})()
 parser.lexer = lexer;
 return parser;
 })();

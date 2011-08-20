@@ -1,10 +1,8 @@
 %%
+
 \s+                   /* skip whitespace */
 [0-9]+                return 'INT';
 ","                   return 'COMMA';
 "["                   return 'LSB';
 "]"                   return 'RSB';
-"+"                   return '+';
-"-"                   return '-';
-"*"                   return '*';
-"/"                   return "/";
+[\+,\-,\\,\*]         return 'OPERATOR';
