@@ -5,4 +5,4 @@
 ","                   return 'COMMA';
 "["                   return 'LSB';
 "]"                   return 'RSB';
-[\+,\-,\\,\*]         return 'OPERATOR';
+[\+,\-]               return 'OPERATOR';
