@@ -5,7 +5,7 @@
  * Lesson 3. Parsing. Parser of AE in math infix notation.
  *
  * In this lesson we continue the implementation of our parser
- * started in lesson 2 where we wrote the first part of the parsing 
+ * started in lesson 2 where we wrote the first part of the parsing
  * process -- the lexer (or scanner, tokenizer).
  *
  * The work of the parser is similar to that of the lexer. The
