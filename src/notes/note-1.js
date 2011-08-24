@@ -93,9 +93,12 @@ console.log("+ * 3 3 2:", evaluate("+ * 3 3 2")); // 11
 // Exercises:
 //
 // 1. Why the result of evaluate("+ 15 2")) is not 17?
-//    Fix the interpreter to support numbers >= 10 (once
-//    again we see the difference between concept of a "char"
-//    in scanning and a "token"; the parser should work with
-//    tokens as we said in lesson-2, but not with chars as
-//    it does now).
-
+//    Fix the interpreter to support numbers >= 10.
+//
+//    Once again we see the difference between concept of
+//    a "char" in scanning and a "token". The parser should
+//    work with tokens ("15") as we said in lesson-2, but not
+//    with chars as it does now ("5", "1").
+//
+// 2. Support float numbers as well. Example: (+ 1 0.5) is 1.5
+//
