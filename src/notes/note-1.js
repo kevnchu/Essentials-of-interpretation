@@ -41,14 +41,8 @@ function evaluate(exp) {
     var current = exp[cursor];
 
     // if it's an operand, then push it onto the stack
-    if (/\d/.test(current)) {
-      var number = current;
-      // in case if a number has more than one digit, i.e. >= 10
-      while ((current = exp[--cursor]) && /\d/.test(current)) {
-        number = current + number;
-      }
-      stack.push(number);
-    }
+    if (/\d/.test(current))
+      stack.push(current);
 
     // else if it's an operator, then calculate the result
     else if (current in operators) {
@@ -85,7 +79,7 @@ var operators = {
 
 // tests
 
-console.log("+ 15 2:", evaluate("+ 15 2")); // 17
+console.log("+ 1 2:", evaluate("+ 1 2")); // 3
 
 console.log("(+ 3 (* 1 2)):", evaluate("(+ 3 (* 3 2))")); // 9
 
@@ -94,3 +88,14 @@ console.log("(+ 3 (* 1 2)):", evaluate("(+ 3 (* 3 2))")); // 9
 console.log("+ 3 * 3 2:", evaluate("+ 3 * 3 2")); // 9
 
 console.log("+ * 3 3 2:", evaluate("+ * 3 3 2")); // 11
+
+
+// Exercises:
+//
+// 1. Why the result of evaluate("+ 15 2")) is not 17?
+//    Fix the interpreter to support numbers >= 10 (once
+//    again we see the difference between concept of a "char"
+//    in scanning and a "token"; the parser should work with
+//    tokens as we said in lesson-2, but not with chars as
+//    it does now).
+
