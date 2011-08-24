@@ -410,7 +410,9 @@ extend(TheGlobalEnvironment, {
   "VERSION": 1.5,
 
   // other functions
-  "print": console.log
+  "print": function (/*arguments*/) {
+    return console.log.apply(console, arguments);
+  }
 
 });
 
