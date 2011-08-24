@@ -16,5 +16,6 @@ Notes:
 
 <ul>
   <li><a href="https://github.com/DmitrySoshnikov/Essentials-of-interpretation/blob/master/src/notes/note-1.js">Note 1. Stack-based evaluation of the simplest AE in the prefix notation</a></li>
+  <li><a href="https://github.com/DmitrySoshnikov/Essentials-of-interpretation/blob/master/src/notes/note-2.js">Note 2. S-expression to AST transformer</a></li>
 </ul>
 
