@@ -17,14 +17,14 @@
  *  (print 'hello)   |   ["print", "'hello"]
  *
  *  etc. I.e. we see that it's almost the same syntactic
- *  constructrs, just a bit sugarred.
+ *  constructs, just a bit "sugared".
  *
  * This note defines a "parser" of s-expressions which produces
  * on its return AST format of an expression. In the next lessons
  * we'll use exactly s-expressions in our examples, but still
  * to work with ASTs in the interpreter.
  *
- * Dependenices for this note:
+ * Dependencies for this note:
  *
  *  1. code of lesson-4
  *
@@ -37,7 +37,7 @@
  * @param {String} exp
  *
  * Since s-expressions are almost the same syntactic
- * constructrs as our ASTs we can even use (and will use)
+ * constructs as our ASTs we can even use (and will use)
  * just simple RegExp replaces to create our JS array from
  * the s-expression string.
  */
@@ -72,7 +72,6 @@ function parse(exp) {
 
   // having done this, all we have to do else
   // is just to build native JS array using native JS "eval"
-  console.log("exp:", exp);
   return eval(exp);
 
 }
@@ -102,7 +101,7 @@ console.log("(print 'hello world)", parse("(print 'hello world)")); // ["print" 
 
 // Exercises:
 //
-// 1. Supose you don't have convenient RegExp replacements. Write own parser using either
+// 1. Suppose we don't have convenient RegExp replacements. Write own parser using either
 // recursion or stack to handle sub-expressions. See note-1 with the stack implementation
 // (the only difference from note-1 is that instead of direct calculations, we need only to
 // create AST node and put it back to the stack).
