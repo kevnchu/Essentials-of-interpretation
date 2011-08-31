@@ -61,13 +61,13 @@ function parse(exp) {
     .replace(/\)/g, "]")
 
     // then we need to replace space-delimiters
-    // with the commas: ["+" 1 "x"] -> ["+", 1, "x"]
+    // with the commas: [+ 1 x] -> [+, 1, x]
     .replace(/\s+/g, ",")
 
     // after that we also need to quote the function,
     // operator and variable names to avoid parse
     // errors in JS, but, we should leave numbers as is:
-    // [+ 1 x] -> ["+", 1, "x"]
+    // [+, 1, x] -> ["+", 1, "x"]
     .replace(/([^,\[\]0-9]+?(?=(,|\])))/g, '"$1"');
 
   // having done this, all we have to do else
@@ -90,13 +90,13 @@ console.log("(+ 1 2 x):", parse("(+ 1 2 x)")); // ["+", 1, 2, "x"]
 console.log("(+ 1 2):", evaluate(parse("(+ 1 2)"))); // 3
 
 // nested
-console.log("(+ (* 2 3) 1):", parse("(+ (* 2 3) 1)")); // ["+" ["*" 2 3] 1]
+console.log("(+ (* 2 3) 1):", parse("(+ (* 2 3) 1)")); // ["+" ["*", 2, 3], 1]
 
 // definitions
-console.log("(define x 10):",  parse("(define x 10)")); // ["define", "x" 10]
+console.log("(define x 10):",  parse("(define x 10)")); // ["define", "x", 10]
 
 // call to print function with passing string and variable
-console.log("(print 'hello world)", parse("(print 'hello world)")); // ["print" "'hello" "world"]
+console.log("(print 'hello world)", parse("(print 'hello world)")); // ["print", "'hello", "world"]
 
 
 // Exercises:
