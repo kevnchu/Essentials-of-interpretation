@@ -38,7 +38,7 @@
  *
  *   Example:
  *
- *     (define (calculare x y)
+ *     (define (calculate x y)
  *             (define local-var 100)
  *             (+ x y local-var))
  *
@@ -173,7 +173,7 @@ function isDefinition(expression) {
 }
 
 /**
- * isDefinition
+ * isAssignment
  * @param {Expression} expression
  * Tests whether the expression is assignment. We use
  * the same "isTaggedList" from the lesson-1 for that.
@@ -206,7 +206,7 @@ function isBuiltInFunction(procedure) {
  * Note: function's structure does not contain the name
  * of the function, because the name it's a name of
  * of a binding in the environment to which the function
- * is bound. This leads us to an ability to have ananyous
+ * is bound. This leads us to an ability to have anonymous
  * functions (we call them *lambda*s), which we'll be
  * introduce later.
  */
@@ -220,14 +220,18 @@ function isTaggedList(tag, exp) {
 }
 
 // --- Representing user-defined functions ---
-//
-// User-defined (compound) procedures in this version of our interpreter are
-// constructed from parameters and procedure bodies. Later, in the next lessons
-// when we'll implement static scope, inner functions and *closure* in general,
-// user-defined functions will have also third component -- saved lexical,
-// environment, but for now only parameters and bodies. Constructor "makeFunction"
-// is responsible for this functionality.
 
+/**
+ * makeFunction
+ * @param {Array} parameters -- list of parameter names
+ * @param {Array} body -- list of expressions (function body)
+ *
+ * User-defined (compound) procedures in this version of our interpreter are
+ * constructed from parameters and procedure bodies. Later, in the next lessons
+ * when we'll implement static scope, inner functions and *closure* in general,
+ * user-defined functions will have also third component -- saved lexical,
+ * environment, but for now only parameters and bodies.
+ */
 function makeFunction(parameters, body) {
   return ["function", parameters, body];
 }
