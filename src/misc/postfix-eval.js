@@ -36,8 +36,8 @@ function postfixEval(string) {
     // else if it's an operator
     else if (ch in operators) {
 
-      var a = +stack.pop();
       var b = +stack.pop();
+      var a = +stack.pop();
 
       var value = operators[ch](a, b);
       stack.push(value);
@@ -67,4 +67,4 @@ var operators = {
 
 console.log(postfixEval("2 3 +")); // 5
 console.log(postfixEval("2 3 + 5 *")); // 25
-console.log(postfixEval("5 1 2 + 4 * + 3 -")); // -14
+console.log(postfixEval("5 1 2 + 4 * + 3 -")); // 14
