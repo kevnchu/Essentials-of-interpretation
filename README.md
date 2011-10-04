@@ -11,6 +11,7 @@ Available lessons:
   <li><a href="https://github.com/DmitrySoshnikov/Essentials-of-interpretation/blob/master/src/lesson-3.js">Lesson 3. Parsing. Parser of AE in math infix notation</a></li>
   <li><a href="https://github.com/DmitrySoshnikov/Essentials-of-interpretation/blob/master/src/lesson-4.js">Lesson 4. Working with environments. Variables and built-in functions</a></li>
   <li><a href="https://github.com/DmitrySoshnikov/Essentials-of-interpretation/blob/master/src/lesson-5.js">Lesson 5. Simple user-defined functions</a></li>
+  <li><a href="https://github.com/DmitrySoshnikov/Essentials-of-interpretation/blob/master/src/lesson-6.js">Lesson 6. Inner functions, lambdas and closures</a></li>
 </ul>
 
 Notes:
