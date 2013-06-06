@@ -46,6 +46,12 @@ function evaluate(exp) {
   if (isSubtraction(exp))
     return evaluateSubtraction(exp);
 
+  if (isMultiplication(exp))
+    return evaluateMultiplication(exp);
+
+  if (isDivision(exp))
+    return evaluateDivision(exp);
+
   // etc., that is, quite simple "switch-case"
   // anaylisis of the expression type
 
@@ -76,6 +82,22 @@ function isAddition(exp) {
  */
 function isSubtraction(exp) {
   return isTaggedList("-", exp);
+}
+
+/**
+ * tests whether exp is a multiplication
+ * @param {Expression} exp
+ */
+function isMultiplication(exp) {
+  return isTaggedList("*", exp);
+}
+
+/**
+ * tests whether exp is a division
+ * @param {Expression} exp
+ */
+function isDivision(exp) {
+  return isTaggedList("/", exp);
 }
 
 /**
@@ -142,6 +164,22 @@ function evaluateSubtraction(exp) {
   return evaluate(exp[1]) - evaluate(exp[2]);
 }
 
+/**
+ * evaluateMultiplication
+ * @param {Expression} exp
+ */
+function evaluateMultiplication(exp) {
+  return evaluate(exp[1]) * evaluate(exp[2]);
+}
+
+/**
+ * evaluateDivision
+ * @param {Expression} exp
+ */
+function evaluateDivision(exp) {
+  return evaluate(exp[1]) / evaluate(exp[2]);
+}
+
 // we represent program in "parenthesized prefix"
 // form, that is: (operator operands)
 
@@ -153,20 +191,28 @@ console.log("result:", result); // 4
 // more complex addition
 program = ["+", ["+", "1", "4"], ["-", "7", "2"]];
 result = evaluate(program);
+console.log("result:", result); // 10
 
+program = ['*', '1', '1'];
+result = evaluate(program); // 1
+console.log("result:", result); // 10
+
+program = ['/', ['*','9' ,'4'], '6'];
+result = evaluate(program); // 6
 console.log("result:", result); // 10
 
 // Exercises:
 //
 // 1. Implement multiplication and division
-//
+
 // 2. Encapsulate and improve handling of similar
 //    expression types in "eval" reusing the code by getting
 //    the type and running needed evaluator by dynamic name:
 //    E.g.:
 //      var expressionType = getType(exp);
 //      return this["evaluate" + expressionType](exp);
-//
+
 // 3. Write a parser which translates concrete syntax to AST.
 //    Chose any concrete syntax, e.g. infix math notation:
 //    1 + 3 -> ["+", "1", "3"].
+
