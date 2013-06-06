@@ -192,6 +192,8 @@ var evaluate = (function () {
     return eval;
 }());
 
+var parser = (function () {
+}());
 
 // we represent program in "parenthesized prefix"
 // form, that is: (operator operands)
@@ -228,4 +230,3 @@ console.log("result:", result); // 10
 // 3. Write a parser which translates concrete syntax to AST.
 //    Chose any concrete syntax, e.g. infix math notation:
 //    1 + 3 -> ["+", "1", "3"].
-
