@@ -192,6 +192,90 @@ var evaluate = (function () {
     return eval;
 }());
 
+var parser = (function () {
+    var parser = function (program) {
+        var tokens = tokenize(program);
+        return parse(tokens);
+    };
+
+    function parse(tokens) {
+        var ast = [],
+            token,
+            value,
+            type;
+        while (tokens.length) {
+            token = tokens.shift();
+            type = token.type;
+            value = token.value;
+            if (type === 'Number') {
+                ast.push(value);
+            } else if (isTerminal(type)) {
+                ast.unshift(value);
+            } else if (type === 'oParen') {
+                ast.push(parse(tokens));
+            } else if (type === 'cParen') {
+                return ast;
+            }
+        }
+        return ast;
+    };
+
+    /**
+    * simple tokenizer. tokens must be separated by whitespace in 
+    * valid programs.
+    * @param {String} input
+    */
+    function tokenize(input) {
+        var tokens = [];
+        tokens = input.split(' ')
+            .filter(function (token) {
+                return !!token;
+            })
+            .map(function (token) {
+                var type = getType(token);
+                return {
+                    value: token,
+                    type: type
+                };
+            });
+        return tokens;
+    }
+
+    function getType(token) {
+        // if it's a number, eval a number
+        if (!isNaN(+token))
+            return 'Number';
+
+        // if it's addition, eval the addition
+        if (token === '+')
+            return 'Addition';
+
+        // if it's a subtraction, eval the subtraction
+        if (token === '-')
+            return 'Subtraction';
+
+        if (token === '*')
+            return 'Multiplication';
+
+        if (token === '/')
+            return 'Division';
+
+        if (token === '(')
+            return 'oParen';
+
+        if (token === ')')
+            return 'cParen';
+    }
+
+    function isTerminal(tokenType) {
+        return tokenType === 'Addition' ||
+            tokenType === 'Subtraction' ||
+            tokenType === 'Multiplication' ||
+            tokenType === 'Division';
+    }
+
+    return parser;
+}());
 
 // we represent program in "parenthesized prefix"
 // form, that is: (operator operands)
@@ -207,12 +291,17 @@ result = evaluate(program);
 console.log("result:", result); // 10
 
 program = ['*', '1', '1'];
-result = evaluate(program); // 1
-console.log("result:", result); // 10
+result = evaluate(program);
+console.log("result:", result); // 1
 
 program = ['/', ['*','9' ,'4'], '6'];
-result = evaluate(program); // 6
+result = evaluate(program);
 console.log("result:", result); // 10
+
+var input = "( 2 + 1 ) + ( 2 * 3 )";
+program = parser(input);
+result = evaluate(program);
+console.log("result:", result); // 9
 
 // Exercises:
 //
@@ -228,4 +317,3 @@ console.log("result:", result); // 10
 // 3. Write a parser which translates concrete syntax to AST.
 //    Chose any concrete syntax, e.g. infix math notation:
 //    1 + 3 -> ["+", "1", "3"].
-
