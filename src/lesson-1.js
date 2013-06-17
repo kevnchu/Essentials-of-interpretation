@@ -282,27 +282,6 @@ module.exports = {
     parser: parser
 }
 
-// we represent program in "parenthesized prefix"
-// form, that is: (operator operands)
-
-// the simplest addition
-var program = ["+", "1", "3"];
-var result = evaluate(program);
-console.log("result:", result); // 4
-
-// more complex addition
-program = ["+", ["+", "1", "4"], ["-", "7", "2"]];
-result = evaluate(program);
-console.log("result:", result); // 10
-
-program = ['*', '1', '1'];
-result = evaluate(program);
-console.log("result:", result); // 1
-
-program = ['/', ['*','9' ,'4'], '6'];
-result = evaluate(program);
-console.log("result:", result); // 10
-
 var input = "( 2 + 1 ) + ( 2 * 3 )";
 program = parser(input);
 result = evaluate(program);
