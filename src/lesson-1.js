@@ -277,6 +277,11 @@ var parser = (function () {
     return parser;
 }());
 
+module.exports = {
+    evaluate: evaluate,
+    parser: parser
+}
+
 // we represent program in "parenthesized prefix"
 // form, that is: (operator operands)
 
